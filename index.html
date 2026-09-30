@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASTRAHEALTH — Autonomous Astronaut Health Monitoring</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<header class="topnav">
+  <div class="nav-left">
+    <div class="logo-mark">
+      <svg viewBox="0 0 40 40" width="36" height="36">
+        <circle cx="20" cy="20" r="17" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
+        <circle cx="20" cy="20" r="10" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.6"/>
+        <circle cx="20" cy="20" r="3" fill="#00d4ff"/>
+        <path d="M3 20 Q 20 5 37 20 Q 20 35 3 20" fill="none" stroke="#00d4ff" stroke-width="0.8" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <div class="logo-name">ASTRAHEALTH</div>
+      <div class="logo-sub">Autonomous Astronaut Health Intelligence</div>
+    </div>
+  </div>
+
+  <div class="nav-center">
+    <div class="nav-stat"><span class="nav-label">MISSION</span><span class="nav-value">MARS-01</span></div>
+    <div class="nav-divider"></div>
+    <div class="nav-stat"><span class="nav-label">MISSION DAY</span><span class="nav-value" id="missionDay">087</span></div>
+    <div class="nav-divider"></div>
+    <div class="nav-stat"><span class="nav-label">CREW</span><span class="nav-value">04</span></div>
+  </div>
+
+  <div class="nav-right">
+    <div class="status-pill online">
+      <span class="dot"></span> SYSTEM ONLINE
+    </div>
+    <div class="status-pill local" id="localModePill">
+      <span class="dot pulse"></span> LOCAL PROCESSING ACTIVE
+    </div>
+    <div class="nav-label-small">Local AI Mode</div>
+  </div>
+</header>
+
+<main class="dashboard">
+
+  <!-- ============ HERO STATUS ============ -->
+  <section class="hero">
+    <div class="hero-left panel">
+      <div class="hero-tags">
+        <span class="tag">ASTRONAUT 01</span>
+        <span class="tag tag-name">COMMANDER <span id="astroName">MAYA</span></span>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-row"><span>MISSION</span><b>MARS TRANSIT</b></div>
+        <div class="meta-row"><span>MISSION DAY</span><b id="missionDayProgress">087 / 240</b></div>
+        <div class="meta-row"><span>STATUS</span><b class="status-attention" id="astroStatus">ATTENTION</b></div>
+      </div>
+
+      <div class="health-score-wrap">
+        <div class="health-score">
+          <svg viewBox="0 0 200 200" class="score-ring">
+            <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="6"/>
+            <circle id="scoreArc" cx="100" cy="100" r="88" fill="none" stroke="#00d4ff" stroke-width="6"
+                    stroke-linecap="round" stroke-dasharray="553" stroke-dashoffset="553"
+                    transform="rotate(-90 100 100)"/>
+          </svg>
+          <div class="score-inner">
+            <div class="score-value" id="scoreValue">76</div>
+            <div class="score-total">/ 100</div>
+            <div class="score-label">ASTRONAUT HEALTH INDEX</div>
+          </div>
+          <div class="pulse-ring"></div>
+        </div>
+        <div class="score-note" id="scoreNote">Stable with elevated recovery indicators</div>
+      </div>
+    </div>
+
+    <div class="hero-right panel">
+      <div class="avatar-area">
+        <div class="avatar-label-top">ASTRONAUT 01</div>
+        <div class="avatar">
+          <svg viewBox="0 0 220 280" width="220" height="280">
+            <defs>
+              <radialGradient id="helmGrad" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#1a3a5c"/>
+                <stop offset="60%" stop-color="#0a1830"/>
+                <stop offset="100%" stop-color="#020610"/>
+              </radialGradient>
+              <linearGradient id="suitGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#d8e2ee"/>
+                <stop offset="100%" stop-color="#7d8da3"/>
+              </linearGradient>
+            </defs>
+            <!-- helmet -->
+            <ellipse cx="110" cy="95" rx="62" ry="68" fill="url(#helmGrad)" stroke="#00d4ff" stroke-width="1.2"/>
+            <path d="M70 80 Q110 50 150 80" fill="none" stroke="#00d4ff" stroke-width="0.8" opacity="0.5"/>
+            <!-- visor reflection -->
+            <ellipse cx="95" cy="80" rx="18" ry="10" fill="#00d4ff" opacity="0.15"/>
+            <!-- suit -->
+            <path d="M60 160 Q60 145 110 145 Q160 145 160 160 L170 250 Q170 270 110 270 Q50 270 50 250 Z"
+                  fill="url(#suitGrad)" stroke="#00d4ff" stroke-width="0.8" opacity="0.85"/>
+            <!-- chest panel -->
+            <rect x="92" y="180" width="36" height="50" rx="4" fill="#0a1830" stroke="#00d4ff" stroke-width="0.8"/>
+            <circle cx="100" cy="192" r="2.5" fill="#00ff88"/>
+            <circle cx="110" cy="192" r="2.5" fill="#ffaa00"/>
+            <circle cx="120" cy="192" r="2.5" fill="#00d4ff"/>
+            <rect x="98" y="202" width="24" height="3" fill="#00d4ff" opacity="0.5"/>
+            <rect x="98" y="208" width="18" height="3" fill="#00d4ff" opacity="0.3"/>
+            <!-- shoulders -->
+            <circle cx="55" cy="165" r="12" fill="#9aabc0" stroke="#00d4ff" stroke-width="0.5"/>
+            <circle cx="165" cy="165" r="12" fill="#9aabc0" stroke="#00d4ff" stroke-width="0.5"/>
+            <!-- helmet ring -->
+            <ellipse cx="110" cy="158" rx="58" ry="8" fill="none" stroke="#00d4ff" stroke-width="1"/>
+          </svg>
+          <div class="scan-line"></div>
+        </div>
+
+        <div class="avatar-status">
+          <div class="as-item" style="top:8%;left:-10%"><span>HEART</span><b id="avHeart">82</b></div>
+          <div class="as-item" style="top:28%;right:-12%"><span>SLEEP</span><b id="avSleep">5.9h</b></div>
+          <div class="as-item" style="top:52%;left:-12%"><span>STRESS</span><b id="avStress">68</b></div>
+          <div class="as-item" style="top:74%;right:-10%"><span>OXYGEN</span><b id="avOxy">97%</b></div>
+          <div class="as-item" style="bottom:2%;left:38%"><span>ACTIVITY</span><b id="avAct">72%</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DATA PIPELINE ============ -->
+  <section class="pipeline-section panel">
+    <div class="section-title"><span class="bar"></span>SYSTEM DATA PIPELINE</div>
+    <div class="pipeline">
+      <div class="pipe-node"><div class="pipe-icon">◉</div><span>SENSORS</span></div>
+      <div class="pipe-line"></div>
+      <div class="pipe-node"><div class="pipe-icon">⬡</div><span>DATA FUSION</span></div>
+      <div class="pipe-line"></div>
+      <div class="pipe-node"><div class="pipe-icon">≡</div><span>PERSONAL BASELINE</span></div>
+      <div class="pipe-line"></div>
+      <div class="pipe-node"><div class="pipe-icon">∿</div><span>ANOMALY DETECTION</span></div>
+      <div class="pipe-line"></div>
+      <div class="pipe-node"><div class="pipe-icon">✦</div><span>AI RISK ENGINE</span></div>
+      <div class="pipe-line"></div>
+      <div class="pipe-node"><div class="pipe-icon">◈</div><span>EXPLAINABLE AI</span></div>
+      <div class="pipe-line"></div>
+      <div class="pipe-node pipe-final"><div class="pipe-icon">▶</div><span>ACTION</span></div>
+      <div class="pipe-dot"></div>
+    </div>
+  </section>
+
+  <!-- ============ HEALTH METRICS GRID ============ -->
+  <section class="metrics-section">
+    <div class="section-title"><span class="bar"></span>LIVE HEALTH MONITORING</div>
+    <div class="metrics-grid" id="metricsGrid">
+      <!-- generated by JS -->
+    </div>
+  </section>
+
+  <!-- ============ CHART + BASELINE ============ -->
+  <section class="chart-baseline">
+    <div class="panel chart-panel">
+      <div class="panel-head">
+        <div class="section-title"><span class="bar"></span>LIVE CARDIOVASCULAR SIGNAL</div>
+        <div class="chart-legend">
+          <span class="live-tag"><span class="dot pulse"></span>LIVE</span>
+          <span class="bpm-tag"><b id="liveBpm">82</b> BPM</span>
+          <span class="hrv-tag">HRV <b id="liveHrv">49</b>ms</span>
+        </div>
+      </div>
+      <canvas id="ecgCanvas" width="900" height="280"></canvas>
+    </div>
+
+    <div class="panel baseline-panel">
+      <div class="section-title"><span class="bar"></span>PERSONAL BASELINE ANALYSIS</div>
+      <div class="baseline-sub">Current measurements compared with astronaut's pre-mission baseline</div>
+      <div class="baseline-list" id="baselineList"></div>
+      <div class="baseline-note">Personal baseline enables individualized health monitoring instead of relying only on universal thresholds.</div>
+    </div>
+  </section>
+
+  <!-- ============ AI RISK ANALYSIS ============ -->
+  <section class="risk-section panel">
+    <div class="panel-head">
+      <div class="section-title"><span class="bar"></span>AI RISK ANALYSIS</div>
+      <button class="btn" id="openRiskModal">VIEW FULL ANALYSIS</button>
+    </div>
+    <div class="risk-grid" id="riskGrid"></div>
+  </section>
+
+  <!-- ============ EXPLAINABLE AI + EARLY WARNING ============ -->
+  <section class="explain-warning">
+    <div class="panel explain-panel">
+      <div class="section-title"><span class="bar"></span>WHY DID THE RISK INCREASE?</div>
+      <div class="explain-sub">Top contributing factors</div>
+      <div class="explain-list" id="explainList"></div>
+      <div class="ai-insight">
+        <div class="ai-insight-head"><span class="ai-badge">AI INSIGHT</span></div>
+        <p id="aiInsightText">Cardiovascular risk has increased primarily due to a multi-day decline in HRV and sleep recovery indicators, combined with an elevated resting heart rate.</p>
+        <div class="disclaimer">⚠ Prototype AI-generated insight — not a medical diagnosis.</div>
+      </div>
+    </div>
+
+    <div class="panel warning-panel">
+      <div class="section-title"><span class="bar"></span>EARLY WARNING SYSTEM</div>
+      <div class="warning-banner">
+        <div class="warning-icon">⚠</div>
+        <div>
+          <div class="warning-title">4-day recovery decline detected</div>
+          <div class="warning-conf">Trend confidence: <b>86%</b></div>
+        </div>
+      </div>
+      <div class="timeline-mini" id="timelineMini"></div>
+      <button class="btn btn-accent" id="openTrendModal">VIEW TRED</button>
+    </div>
+  </section>
+
+  <!-- ============ COPILOT + COUNTERMEASURE ============ -->
+  <section class="copilot-action">
+    <div class="panel copilot-panel">
+      <div class="section-title"><span class="bar"></span>ASTRA AI COPILOT</div>
+      <div class="copilot-sub">Onboard health decision-support assistant</div>
+      <div class="chat-box" id="chatBox"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="Ask ASTRA about your health..." autocomplete="off">
+        <button class="btn btn-accent" id="chatSend">SEND</button>
+      </div>
+    </div>
+
+    <div class="panel action-panel">
+      <div class="section-title"><span class="bar"></span>RECOMMENDED COUNTERMEASURE</div>
+      <div class="action-concern">
+        <span>Current concern:</span>
+        <b>Elevated recovery / cardiovascular stress</b>
+      </div>
+      <ol class="action-list">
+        <li><span class="num">01</span><span>Recovery period</span></li>
+        <li><span class="num">02</span><span>Review scheduled exercise workload</span></li>
+        <li><span class="num">03</span><span>Hydration and nutrition check</span></li>
+        <li><span class="num">04</span><span>Re-monitor physiological indicators</span></li>
+      </ol>
+      <button class="btn btn-go" id="startRecovery">START RECOVERY PROTOCOL</button>
+    </div>
+  </section>
+
+  <!-- ============ MISSION TIMELINE ============ -->
+  <section class="panel timeline-section">
+    <div class="section-title"><span class="bar"></span>MISSION TIMELINE</div>
+    <div class="timeline" id="missionTimeline"></div>
+    <div class="timeline-detail" id="timelineDetail">Click a mission event to view details.</div>
+  </section>
+
+  <!-- ============ CREW + DEEP SPACE + ADAPTIVE ============ -->
+  <section class="bottom-grid">
+    <div class="panel crew-panel">
+      <div class="section-title"><span class="bar"></span>MISSION CONTROL — CREW OVERVIEW</div>
+      <div class="crew-grid" id="crewGrid"></div>
+    </div>
+
+    <div class="panel deep-panel">
+      <div class="section-title"><span class="bar"></span>DEEP SPACE MODE</div>
+      <div class="deep-toggle-row">
+        <span>EARTH CONNECTION</span>
+        <div class="toggle-switch" id="deepToggle">
+          <div class="toggle-knob"></div>
+          <span class="toggle-label" id="toggleLabel">ON</span>
+        </div>
+      </div>
+      <div class="deep-status" id="deepStatus">
+        <div class="ds-row"><span>COMMUNICATION DELAY</span><b class="ds-ok">REAL-TIME</b></div>
+        <div class="ds-row"><span>EARTH MEDICAL SUPPORT</span><b class="ds-ok">AVAILABLE</b></div>
+        <div class="ds-row"><span>LOCAL AI HEALTH SUPPORT</span><b>STANDBY</b></div>
+      </div>
+      <div class="deep-note" id="deepNote">Local processing allows preliminary health assessment during communication delays.</div>
+    </div>
+
+    <div class="panel adaptive-panel">
+      <div class="section-title"><span class="bar"></span>ADAPTIVE MONITORING</div>
+      <div class="adaptive-current">
+        <div class="ac-label">Current monitoring frequency</div>
+        <div class="ac-value"><span id="adaptiveFreq">30</span><small> sec</small></div>
+      </div>
+      <div class="adaptive-tiers">
+        <div class="tier" data-tier="normal"><span class="tier-dot green"></span> Normal · 30 sec</div>
+        <div class="tier" data-tier="warning"><span class="tier-dot orange"></span> Warning · 10 sec</div>
+        <div class="tier" data-tier="critical"><span class="tier-dot red"></span> Critical · 5 sec</div>
+      </div>
+      <div class="adaptive-note">Monitoring frequency automatically adapts to detected risk.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-left">
+    <div class="footer-name">ASTRAHEALTH</div>
+    <div class="footer-sub">Autonomous Astronaut Health Monitoring & Decision Support</div>
+  </div>
+  <div class="footer-right">
+    <div>NASA Space Apps Challenge 2026 · Prototype Interface</div>
+    <div class="footer-tag">Designed for long-duration human spaceflight health support.</div>
+  </div>
+</footer>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBox">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">Title</div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ============ TOASTS ============ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
